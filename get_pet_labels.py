@@ -18,6 +18,7 @@
 ##
 # Imports python modules
 from os import listdir
+import os
 
 # TODO 2: Define get_pet_labels function below please be certain to replace None
 #       in the return statement with results_dic dictionary that you create 
@@ -49,11 +50,14 @@ def get_pet_labels(image_dir):
     for idx in range(0,len(in_files),1):
         # Skips file if starts with . (like .DS_Store of Mac OSX) because it 
         # isn't an pet image file
-        if in_files[idx][0] != ".":
-            pet_image = in_files[idx]
-            low_pet_image = pet_image.lower()
-            word_list_pet_image = low_pet_image.split("_")
-            pet_name = ""
+        if in_files[idx][0] == ".":
+            continue
+            
+        pet_image = in_files[idx]
+        low_pet_image = pet_image.lower()
+        file_name = os.path.splitext(low_pet_image)
+        word_list_pet_image = file_name[0].split("_")
+        pet_name = ""
            
         for word in word_list_pet_image:
             if word.isalpha():
@@ -66,5 +70,5 @@ def get_pet_labels(image_dir):
         else:
             print("** Warning: Duplicate files exist in directory:", 
                      in_files[idx])
-            
+           
     return results_dic
